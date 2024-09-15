@@ -5,6 +5,6 @@
 <a asp-action="Index" asp-controller="Home" class="navbar-brand">Web_253501_Rabets</a>
 <div class="navbar-nav">
     <a asp-action="Index" asp-controller="Home" class="nav-item nav-link @(controller=="home"?"active":"")">ЛР 1</a>
-    <a asp-action="Index" asp-controller="Product" class="nav-item nav-link @(controller=="product"?"active":"")">Каталог</a>
-    <a asp-area="Admin" asp-page="/Index" class="nav-item nav-link @(controller=="admin"?"active":"")">Администрирование</a>
+    <a asp-action="Index" asp-controller="Product" asp-route-category="all" asp-route-page="1" class="nav-item nav-link @(controller=="product"?"active":"")">Каталог</a>
+    <a asp-area="Admin" asp-page="/Index" class="nav-item nav-link disabled @(controller=="admin"?"active":"")">Администрирование</a>
 </div>

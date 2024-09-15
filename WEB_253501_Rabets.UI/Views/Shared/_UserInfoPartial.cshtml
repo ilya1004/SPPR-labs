@@ -2,10 +2,7 @@
 
 }
 
-<a asp-controller="Cart" asp-action="Index" class="navbar-text ms-auto">
-    @await Component.InvokeAsync("CartSummary") руб
-    <i class="fa-solid fa-cart-shopping"></i>
-</a>
+@await Component.InvokeAsync("CartSummary")
 
 <div class="dropdown ms-4 nav-color">
     <button class="btn btn-secondary dropdown-toggle"
@@ -13,7 +10,7 @@
             data-bs-toggle="dropdown"
             aria-expanded="false">
         User@gmail.com
-        <img src="images/roger-berry-avatar-placeholder.png"
+        <img src="images/user.png"
              width="30"
              alt="User"
              class="rounded nav-color" />
@@ -21,7 +18,7 @@
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
             <span class="dropdown-item-text">
-                <img src="images/roger-berry-avatar-placeholder.png"
+                <img src="images/user.png"
                      width="100"
                      alt="User"
                      class="rounded" />

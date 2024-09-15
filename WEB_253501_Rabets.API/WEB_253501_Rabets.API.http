@@ -1,0 +1,6 @@
+@WEB_253501_Rabets.API_HostAddress = http://localhost:5145
+
+GET {{WEB_253501_Rabets.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

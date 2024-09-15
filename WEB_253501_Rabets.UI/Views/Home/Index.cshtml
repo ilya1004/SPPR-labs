@@ -3,107 +3,80 @@
 }
 
 
-<main class="container" style="padding: 10px 0px 10px 0px">
-    @* <h1 style="font-size: 40px"><strong>@ViewData["Text"]</strong></h1> *@
-    <h1 style="font-size: 40px"><strong>Лабораторная работа 1</strong></h1>
-    <h3><b>Список</b></h3>
-    <ol style="list-style-type: upper-alpha">
-        @* @{
-            for (var i = 0; i < 5; i++)
-            {
-                <li>Элемент списка @(i+1)</li>
-            }
-        } *@
-        <li>Элемент списка 0</li>
-        <li>Элемент списка 1</li>
-        <li>Элемент списка 2</li>
-        <li>Элемент списка 3</li>
-        <li>Элемент списка 4</li>
-    </ol>
+<h1 style="font-size: 40px"><strong>@ViewData["Text"]</strong></h1>
+<h3><b>Список</b></h3>
+<ol style="list-style-type: upper-alpha">
+    @{
+        for (var i = 0; i < 5; i++)
+        {
+            <li>Элемент списка @(i + 1)</li>
+        }
+    }
+</ol>
 
-    <hr />
+<hr />
 
-    <h1><b>Форма</b></h1>
+<h1><b>Форма</b></h1>
 
-    <form style="margin: 0 0 10px 0">
-        @* <select asp-items="@Model" class="col-sm-10 offset-sm-2" style="width: 300px;">
-        </select> *@
-        <div class="row mb-3">
-            <div class="col-sm-10 offset-sm-2">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="checkbox1">
-                    <label class="form-check-label" for="checkbox1">
-                        Чек-бокс 1
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="checkbox2">
-                    <label class="form-check-label" for="checkbox2">
-                        Чек-бокс 2
-                    </label>
-                </div>
+<form style="margin: 0 0 10px 0">
+    <select asp-items="@Model" class="col-sm-10 offset-sm-2" style="width: 300px;">
+    </select>
+    <div class="row mb-3">
+        <div class="col-sm-10 offset-sm-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox1">
+                <label class="form-check-label" for="checkbox1">
+                    Чек-бокс 1
+                </label>
             </div>
-        </div>
-        <fieldset class="row mb-3">
-            <div class="col-sm-10 offset-sm-2">
-                <div style="display: flex">
-                    <div class="form-check" style="margin: 0 20px 0 0">
-                        <input class="form-check-input" type="radio" name="gridRadios" value="option1" checked>
-                        <label class="form-check-label" for="gridRadios1">
-                            Радио-1
-                        </label>
-                    </div>
-                    <div class="form-check" style="margin: 0 20px 0 0">
-                        <input class="form-check-input" type="radio" name="gridRadios" value="option2">
-                        <label class="form-check-label" for="gridRadios2">
-                            Радио-2
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" value="option3">
-                        <label class="form-check-label" for="gridRadios3">
-                            Радио-3
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-        <div class="row mb-3">
-            <label for="inputEmail" class="col-sm-2 col-form-label">
-                Логин:
-            </label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Введите имя">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <label for="inputPassword" class="col-sm-2 col-form-label">
-                Пароль:
-            </label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Введите пароль">
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary" formmethod="post">Отправить</button>
-    </form>
-</main>
-
-
-@section Footer
-{
-    <div class="container">
-        <div class="navbar navbar-dark navbar-expand-md bg-dark">
-            <div class="navbar-nav ms-auto">
-                <a class="nav-item nav-link" href="http://www.facebook.com">
-                    <i class="fa-brands fa-facebook-f fa-2x"></i>
-                </a>
-                <a class="nav-item nav-link" href="http://www.vk.com">
-                    <i class="fa-brands fa-vk fa-2x"></i>
-                </a>
-                <a class="nav-item nav-link" href="http://www.x.com/">
-                    <i class="fa-brands fa-x-twitter fa-2x"></i>
-                </a>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox2">
+                <label class="form-check-label" for="checkbox2">
+                    Чек-бокс 2
+                </label>
             </div>
         </div>
     </div>
-}
+    <fieldset class="row mb-3">
+        <div class="col-sm-10 offset-sm-2">
+            <div style="display: flex">
+                <div class="form-check" style="margin: 0 20px 0 0">
+                    <input class="form-check-input" type="radio" name="gridRadios" value="option1" checked>
+                    <label class="form-check-label" for="gridRadios1">
+                        Радио-1
+                    </label>
+                </div>
+                <div class="form-check" style="margin: 0 20px 0 0">
+                    <input class="form-check-input" type="radio" name="gridRadios" value="option2">
+                    <label class="form-check-label" for="gridRadios2">
+                        Радио-2
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gridRadios" value="option3">
+                    <label class="form-check-label" for="gridRadios3">
+                        Радио-3
+                    </label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="row mb-3">
+        <label for="inputEmail" class="col-sm-2 col-form-label">
+            Логин:
+        </label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Введите имя">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="inputPassword" class="col-sm-2 col-form-label">
+            Пароль:
+        </label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Введите пароль">
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary" formmethod="post">Отправить</button>
+</form>
+
