@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WEB_253501_Rabets.API.Services.ElectricProductService;
 using WEB_253501_Rabets.Domain.Entities;
 using WEB_253501_Rabets.Domain.Models;
@@ -17,7 +18,7 @@ public class ElectricProductsController : ControllerBase
         _productService = electricProductService;
     }
 
-    // GET: api/ElectricProducts
+    // GET: api/ElectricProducts/category
     [HttpGet]
     [Route("{category}")]
     public async Task<ActionResult<ResponseData<ProductListModel<ElectricProduct>>>> GetElectricProducts(string? category, [FromQuery] int pageNo = 1, [FromQuery] int pageSize = 3)
@@ -28,7 +29,8 @@ public class ElectricProductsController : ControllerBase
 
     // GET: api/ElectricProducts/5
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<ElectricProduct>> GetElectricProduct(int id)
+    [Authorize("admin")]
+    public async Task<ActionResult<ResponseData<ElectricProduct>>> GetElectricProduct(int id)
     {
         var serviceResponse = await _productService.GetProductByIdAsync(id);
 
@@ -37,66 +39,54 @@ public class ElectricProductsController : ControllerBase
             return NotFound();
         }
 
-        return new ActionResult<ElectricProduct>(serviceResponse.Data);
+        return new ActionResult<ResponseData<ElectricProduct>>(serviceResponse);
     }
 
     // PUT: api/ElectricProducts/5
+    [HttpPut("{id:int}")]
+    [Authorize("admin")]
+    public async Task<ActionResult<ResponseData<bool>>> PutElectricProduct(int id, ElectricProduct electricProduct)
+    {
+        var serviceResponse = await _productService.UpdateProductAsync(id, electricProduct);
+
+        if (!serviceResponse.Successfull)
+        {
+            return NotFound();
+        }
+
+        return new ActionResult<ResponseData<bool>>(serviceResponse);
+    }
+
+    // POST: api/ElectricProducts
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    //[HttpPut("{id}")]
-    //public async Task<IActionResult> PutElectricProduct(int id, ElectricProduct electricProduct)
-    //{
-    //    if (id != electricProduct.Id)
-    //    {
-    //        return BadRequest();
-    //    }
+    [HttpPost]
+    [Authorize("admin")]
+    public async Task<ActionResult<ResponseData<int>>> PostElectricProduct(ElectricProduct electricProduct)
+    {
+        var serviceResponse = await _productService.CreateProductAsync(electricProduct);
 
-    //    _context.Entry(electricProduct).State = EntityState.Modified;
+        if (!serviceResponse.Successfull)
+        {
+            return NotFound();
+        }
 
-    //    try
-    //    {
-    //        await _context.SaveChangesAsync();
-    //    }
-    //    catch (DbUpdateConcurrencyException)
-    //    {
-    //        if (!ElectricProductExists(id))
-    //        {
-    //            return NotFound();
-    //        }
-    //        else
-    //        {
-    //            throw;
-    //        }
-    //    }
+        return new ActionResult<ResponseData<int>>(serviceResponse);
+    }
 
-    //    return NoContent();
-    //}
+    // DELETE: api/ElectricProducts/5
+    [HttpDelete("{id}")]
+    [Authorize("admin")]
+    public async Task<ActionResult<bool>> DeleteElectricProduct(int id)
+    {
+        var serviceResponse = await _productService.DeleteProductAsync(id);
 
-    //// POST: api/ElectricProducts
-    //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    //[HttpPost]
-    //public async Task<ActionResult<ElectricProduct>> PostElectricProduct(ElectricProduct electricProduct)
-    //{
-    //    _context.ElectricProducts.Add(electricProduct);
-    //    await _context.SaveChangesAsync();
+        if (!serviceResponse.Successfull)
+        {
+            return NotFound();
+        }
 
-    //    return CreatedAtAction("GetElectricProduct", new { id = electricProduct.Id }, electricProduct);
-    //}
-
-    //// DELETE: api/ElectricProducts/5
-    //[HttpDelete("{id}")]
-    //public async Task<IActionResult> DeleteElectricProduct(int id)
-    //{
-    //    var electricProduct = await _context.ElectricProducts.FindAsync(id);
-    //    if (electricProduct == null)
-    //    {
-    //        return NotFound();
-    //    }
-
-    //    _context.ElectricProducts.Remove(electricProduct);
-    //    await _context.SaveChangesAsync();
-
-    //    return NoContent();
-    //}
+        return new ActionResult<bool>(serviceResponse.Data);
+    }
 
     //private bool ElectricProductExists(int id)
     //{

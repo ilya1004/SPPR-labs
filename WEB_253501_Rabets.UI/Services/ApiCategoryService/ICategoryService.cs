@@ -1,7 +1,7 @@
 ﻿using WEB_253501_Rabets.Domain.Entities;
 using WEB_253501_Rabets.Domain.Models;
 
-namespace WEB_253501_Rabets.UI.Services.CategoryService;
+namespace WEB_253501_Rabets.UI.Services.ApiCategoryService;
 
 public interface ICategoryService
 {

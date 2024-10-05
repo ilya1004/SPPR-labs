@@ -1,0 +1,54 @@
+﻿@page
+@model WEB_253501_Rabets.UI.Areas.Admin.Pages.Product.DetailsModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ElectricProduct</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElectricProduct.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElectricProduct.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElectricProduct.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElectricProduct.Description)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ElectricProduct.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElectricProduct.Price)
+        </dd>
+
+        <dt class="col-sm-2">
+            Категория
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ElectricProduct.Category.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            Изображение
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.ElectricProduct.ImagePath" style="max-height: 300px; max-width: 600px"/>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ElectricProduct.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

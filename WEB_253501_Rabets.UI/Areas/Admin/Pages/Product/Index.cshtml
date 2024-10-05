@@ -1,0 +1,65 @@
+﻿@page
+@model WEB_253501_Rabets.UI.Areas.Admin.Pages.Product.IndexModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectricProduct[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectricProduct[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ElectricProduct[0].Price)
+            </th>
+            <th>
+                Изображение
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@{
+    foreach (var item in Model.ElectricProduct) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <img src="@(Html.DisplayFor(modelItem => item.ImagePath))" style="max-width: 200px; max-height: 170px" />
+            </td>
+            <td>
+                <div style="margin-bottom: 10px">
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                </div>
+                <div style="margin-bottom: 10px">
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                </div>
+                <div>
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </td>
+        </tr>
+    }
+}
+    </tbody>
+</table>

@@ -1,8 +1,11 @@
-﻿using System.Text;
+﻿using System.Net.Http.Headers;
+using System.Security.Policy;
+using System.Text;
 using System.Text.Json;
 using WEB_253501_Rabets.Domain.Entities;
 using WEB_253501_Rabets.Domain.Models;
-using WEB_253501_Rabets.UI.Services.ElectricProductService;
+using WEB_253501_Rabets.UI.Services.ApiFileService;
+using WEB_253501_Rabets.UI.Services.Authentication;
 
 namespace WEB_253501_Rabets.UI.Services.ApiProductService;
 
@@ -14,10 +17,12 @@ public class ApiProductService : IProductService
     private readonly string _pageSize;
     private readonly JsonSerializerOptions _serializerOptions;
     private readonly IHttpClientFactory _httpClientFactory;
-    public ApiProductService(HttpClient httpClient, IConfiguration configuration, ILogger<ApiProductService> logger, IHttpClientFactory httpClientFactory)
+    private readonly IFileService _fileService;
+    private readonly ITokenAccessor _tokenAccessor;
+    public ApiProductService(IConfiguration configuration, ILogger<ApiProductService> logger, IHttpClientFactory httpClientFactory, IFileService fileService, ITokenAccessor tokenAccessor)
     {
-        //_httpClient = httpClient;
-        _pageSize = configuration.GetSection("ItemsPerPage").Value;
+        _configuration = configuration;
+        _pageSize = _configuration.GetSection("ItemsPerPage").Value!;
         _serializerOptions = new JsonSerializerOptions()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -26,19 +31,19 @@ public class ApiProductService : IProductService
         _httpClientFactory = httpClientFactory;
 
         _httpClient = _httpClientFactory.CreateClient("MyApiClient");
+        _fileService = fileService;
+        _tokenAccessor = tokenAccessor;
     }
 
     public async Task<ResponseData<ProductListModel<ElectricProduct>>> GetProductListAsync(string? categoryNormalizedName, int pageNo = 1)
-    {
-        await Console.Out.WriteLineAsync(_httpClient.BaseAddress.ToString());
-        
-        var urlString = new StringBuilder($"{_httpClient.BaseAddress.AbsoluteUri}ElectricProducts/");
+    {        
+        var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}ElectricProducts/");
         
         urlString.Append($"{categoryNormalizedName}?");
         urlString.Append($"pageNo={pageNo}");
         urlString.Append($"&pageSize={_pageSize}");
 
-        await Console.Out.WriteLineAsync(urlString.ToString());
+        //await _tokenAccessor.SetAuthorizationHeaderAsync(_httpClient);
 
         var response = await _httpClient.GetAsync(new Uri(urlString.ToString()));
         
@@ -54,28 +59,128 @@ public class ApiProductService : IProductService
                 return ResponseData<ProductListModel<ElectricProduct>>.Error($"Ошибка: {ex.Message}");
             }
         }
-        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode.ToString()}");
-        return ResponseData<ProductListModel<ElectricProduct>>.Error($"Данные не получены от сервера. Error: {response.StatusCode.ToString()}");
-}
-
-
-    public Task<ResponseData<ElectricProduct>> CreateProductAsync(ElectricProduct product, IFormFile? formFile)
-    {
-        throw new NotImplementedException();
+        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
+        return ResponseData<ProductListModel<ElectricProduct>>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
     }
 
-    public Task DeleteProductAsync(int id)
+
+    public async Task<ResponseData<int>> CreateProductAsync(ElectricProduct product, IFormFile? formFile)
     {
-        throw new NotImplementedException();
+        var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}ElectricProducts/");
+
+        if (formFile != null)
+        {
+            var imageUrl = await _fileService.SaveFileAsync(formFile);
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                product.ImagePath = imageUrl;
+            }
+        }
+
+        await _tokenAccessor.SetAuthorizationHeaderAsync(_httpClient);
+
+        var response = await _httpClient.PostAsJsonAsync(new Uri(urlString.ToString()), product, _serializerOptions);
+
+        if (response.IsSuccessStatusCode)
+        {
+            try
+            {
+                return await response.Content.ReadFromJsonAsync<ResponseData<int>>(_serializerOptions);
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError($"-----> Ошибка: {ex.Message}");
+                return ResponseData<int>.Error($"Ошибка: {ex.Message}");
+            }
+        }
+
+        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
+        return ResponseData<int>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
     }
 
-    public Task<ResponseData<ElectricProduct>> GetProductByIdAsync(int id)
+    public async Task<ResponseData<bool>> DeleteProductAsync(int id)
     {
-        throw new NotImplementedException();
+        var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}ElectricProducts/");
+
+        urlString.Append($"{id}");
+
+        await _tokenAccessor.SetAuthorizationHeaderAsync(_httpClient);
+
+        var response = await _httpClient.DeleteAsync(new Uri(urlString.ToString()));
+
+        if (response.IsSuccessStatusCode)
+        {
+            try
+            {
+                return await response.Content.ReadFromJsonAsync<ResponseData<bool>>(_serializerOptions);
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError($"-----> Ошибка: {ex.Message}");
+                return ResponseData<bool>.Error($"Ошибка: {ex.Message}");
+            }
+        }
+        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
+        return ResponseData<bool>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
     }
 
-    public Task UpdateProductAsync(int id, ElectricProduct product, IFormFile? formFile)
+    public async Task<ResponseData<ElectricProduct>> GetProductByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}ElectricProducts/");
+
+        urlString.Append($"{id}");
+
+        await _tokenAccessor.SetAuthorizationHeaderAsync(_httpClient);
+
+        var response = await _httpClient.GetAsync(new Uri(urlString.ToString()));
+
+        if (response.IsSuccessStatusCode)
+        {
+            try
+            {
+                return await response.Content.ReadFromJsonAsync<ResponseData<ElectricProduct>>(_serializerOptions);
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError($"-----> Ошибка: {ex.Message}");
+                return ResponseData<ElectricProduct>.Error($"Ошибка: {ex.Message}");
+            }
+        }
+        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
+        return ResponseData<ElectricProduct>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
+    }
+
+    public async Task<ResponseData<bool>> UpdateProductAsync(int id, ElectricProduct product, IFormFile? formFile)
+    {
+        var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}ElectricProducts/{id}");
+
+        if (formFile != null)
+        {
+            var imageUrl = await _fileService.SaveFileAsync(formFile);
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                product.ImagePath = imageUrl;
+            }
+        }
+
+        await _tokenAccessor.SetAuthorizationHeaderAsync(_httpClient);
+
+        var response = await _httpClient.PutAsJsonAsync(new Uri(urlString.ToString()), product, _serializerOptions);
+
+        if (response.IsSuccessStatusCode)
+        {
+            try
+            {
+                return await response.Content.ReadFromJsonAsync<ResponseData<bool>>(_serializerOptions);
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogError($"-----> Ошибка: {ex.Message}");
+                return ResponseData<bool>.Error($"Ошибка: {ex.Message}");
+            }
+        }
+
+        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode}");
+        return ResponseData<bool>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
     }
 }

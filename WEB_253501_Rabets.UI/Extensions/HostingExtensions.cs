@@ -1,7 +1,9 @@
-﻿using WEB_253501_Rabets.UI.Services.ApiCategoryService;
+﻿using WEB_253501_Rabets.UI.Models;
+using WEB_253501_Rabets.UI.Services.ApiCategoryService;
+using WEB_253501_Rabets.UI.Services.ApiFileService;
 using WEB_253501_Rabets.UI.Services.ApiProductService;
-using WEB_253501_Rabets.UI.Services.CategoryService;
-using WEB_253501_Rabets.UI.Services.ElectricProductService;
+using WEB_253501_Rabets.UI.Services.Authentication;
+using WEB_253501_Rabets.UI.Services.Authorization;
 
 namespace WEB_253501_Rabets.UI.Extensions;
 
@@ -12,7 +14,12 @@ public static class HostingExtensions
         //builder.Services.AddScoped<Services.CategoryService.ICategoryService, MemoryCategoryService>();
         //builder.Services.AddScoped<Services.ElectricProductService.IProductService, MemoryProductService>();
         
-        builder.Services.AddScoped<Services.ApiProductService.IProductService, ApiProductService>();
-        builder.Services.AddScoped<Services.ApiCategoryService.ICategoryService, ApiCategoryService>();
+        builder.Services.AddScoped<IProductService, ApiProductService>();
+        builder.Services.AddScoped<ICategoryService, ApiCategoryService>();
+        builder.Services.AddScoped<IFileService, ApiFileService>();
+        builder.Services.AddScoped<ITokenAccessor, KeycloakTokenAccessor>();
+        builder.Services.AddScoped<IAuthService, KeycloakAuthService>();
+
+        builder.Services.Configure<KeycloakData>(builder.Configuration.GetSection("Keycloak"));
     }
 }

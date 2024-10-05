@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text;
 using WEB_253501_Rabets.Domain.Entities;
 using WEB_253501_Rabets.Domain.Models;
-using WEB_253501_Rabets.UI.Services.CategoryService;
+using WEB_253501_Rabets.UI.Services.Authentication;
 
 namespace WEB_253501_Rabets.UI.Services.ApiCategoryService;
 
@@ -16,9 +14,11 @@ public class ApiCategoryService : ICategoryService
     private readonly string _pageSize;
     private readonly JsonSerializerOptions _serializerOptions;
     private readonly IHttpClientFactory _httpClientFactory;
-    public ApiCategoryService(HttpClient httpClient, IConfiguration configuration, ILogger<ApiCategoryService> logger, IHttpClientFactory httpClientFactory)
+    private readonly ITokenAccessor _tokenAccessor;
+    public ApiCategoryService(IConfiguration configuration, ILogger<ApiCategoryService> logger, IHttpClientFactory httpClientFactory, ITokenAccessor tokenAccessor)
     {
-        _pageSize = configuration.GetSection("ItemsPerPage").Value;
+        _configuration = configuration;
+        _pageSize = _configuration.GetSection("ItemsPerPage").Value!;
         _serializerOptions = new JsonSerializerOptions()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -26,19 +26,23 @@ public class ApiCategoryService : ICategoryService
         _logger = logger;
         _httpClientFactory = httpClientFactory;
         _httpClient = _httpClientFactory.CreateClient("MyApiClient");
+        _tokenAccessor = tokenAccessor;
     }
 
     public async Task<ResponseData<List<Category>>> GetCategoryListAsync()
     {
-        var urlString = new StringBuilder($"{_httpClient.BaseAddress.AbsoluteUri}Categories");
+        var urlString = new StringBuilder($"{_httpClient.BaseAddress!.AbsoluteUri}Categories");
+
+        await _tokenAccessor.SetAuthorizationHeaderAsync(_httpClient);
 
         var response = await _httpClient.GetAsync(new Uri(urlString.ToString()));
+
         if (response.IsSuccessStatusCode)
         {
             try
             {
                 var data = await response.Content.ReadFromJsonAsync<List<Category>>(_serializerOptions);
-                return ResponseData<List<Category>>.Success(data);
+                return ResponseData<List<Category>>.Success(data!);
             }
             catch (JsonException ex)
             {
@@ -47,7 +51,7 @@ public class ApiCategoryService : ICategoryService
             }
         }
         _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode.ToString()}");
-        return ResponseData<List<Category>>.Error($"Данные не получены от сервера. Error: {response.StatusCode.ToString()}");
+        return ResponseData<List<Category>>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
     }
 }
 

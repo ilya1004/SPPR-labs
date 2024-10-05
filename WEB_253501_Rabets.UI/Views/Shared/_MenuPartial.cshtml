@@ -1,10 +1,11 @@
 ﻿@{
     var controller = ViewContext.RouteData.Values["controller"]?.ToString()?.ToLower() ?? String.Empty;
+    var area = ViewContext.RouteData.Values["area"]?.ToString()?.ToLower() ?? String.Empty;
 }
 
-<a asp-action="Index" asp-controller="Home" class="navbar-brand">Web_253501_Rabets</a>
+<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Web_253501_Rabets</a>
 <div class="navbar-nav">
-    <a asp-action="Index" asp-controller="Home" class="nav-item nav-link @(controller=="home"?"active":"")">ЛР 1</a>
-    <a asp-action="Index" asp-controller="Product" asp-route-category="all" asp-route-page="1" class="nav-item nav-link @(controller=="product"?"active":"")">Каталог</a>
-    <a asp-area="Admin" asp-page="/Index" class="nav-item nav-link disabled @(controller=="admin"?"active":"")">Администрирование</a>
+    <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-item nav-link @(controller=="home"?"active":"")">ЛР 1</a>
+    <a asp-area="" asp-controller="Product" asp-action="Index" asp-route-category="all" asp-route-page="1" class="nav-item nav-link @(controller=="product"?"active":"")">Каталог</a>
+    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-item nav-link @(area=="admin"?"active":"")">Администрирование</a>
 </div>

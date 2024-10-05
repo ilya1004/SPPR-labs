@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using WEB_253501_Rabets.API.Data;
-using WEB_253501_Rabets.API.Services.CategoryService;
 using WEB_253501_Rabets.Domain.Entities;
 using WEB_253501_Rabets.Domain.Models;
 
@@ -17,19 +16,38 @@ public class ProductService : IProductService
         _context = context;
     }
 
-    public Task<ResponseData<ElectricProduct>> CreateProductAsync(ElectricProduct product, IFormFile? formFile)
+    public async Task<ResponseData<int>> CreateProductAsync(ElectricProduct product)
     {
-        throw new NotImplementedException();
+        if ((product.Category.Name.IsNullOrEmpty() || product.Category.Name.IsNullOrEmpty()) && product.Category != null)
+        {
+            var category = _context.Categories.FirstOrDefault(c => c.Id == product.Category.Id);
+            product.Category = category;
+        }
+        var item = await _context.ElectricProducts.AddAsync(product);
+        await _context.SaveChangesAsync();
+        return ResponseData<int>.Success(item.Entity.Id);
     }
 
-    public Task DeleteProductAsync(int id)
+    public async Task<ResponseData<bool>> DeleteProductAsync(int id)
     {
-        throw new NotImplementedException();
+        if (id < 0)
+        {
+            return ResponseData<bool>.Error("No such id");
+        }
+
+        await _context.ElectricProducts.Where(p => p.Id == id).ExecuteDeleteAsync();
+        return ResponseData<bool>.Success(true);
     }
 
-    public Task<ResponseData<ElectricProduct>> GetProductByIdAsync(int id)
+    public async Task<ResponseData<ElectricProduct>> GetProductByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        if (id < 0)
+        {
+            return ResponseData<ElectricProduct>.Error("No such id");
+        }
+
+        var dataItem = await _context.ElectricProducts.AsNoTracking().Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+        return ResponseData<ElectricProduct>.Success(dataItem!);
     }
 
     public async Task<ResponseData<ProductListModel<ElectricProduct>>> GetProductListAsync(string? categoryNormalizedName, int pageNo = 1, int pageSize = 3)
@@ -39,7 +57,7 @@ public class ProductService : IProductService
             pageSize = _maxPageSize;
         }
 
-        var query = _context.ElectricProducts.AsQueryable();
+        var query = _context.ElectricProducts.AsQueryable().Include(p => p.Category).AsNoTracking();
 
         var dataList = new ProductListModel<ElectricProduct>();
 
@@ -61,7 +79,14 @@ public class ProductService : IProductService
             return ResponseData<ProductListModel<ElectricProduct>>.Error("No such page");
         }
 
-        dataList.Items = await query.Skip(pageSize * (pageNo - 1)).Take(pageSize).ToListAsync();
+        if (pageNo == 0)
+        {
+            dataList.Items = await query.ToListAsync();
+        }
+        else
+        {
+            dataList.Items = await query.OrderBy(p => p.Id).Skip(pageSize * (pageNo - 1)).Take(pageSize).ToListAsync();
+        }
 
         dataList.TotalPages = totalPages;
         dataList.CurrentPage = pageNo;
@@ -74,8 +99,38 @@ public class ProductService : IProductService
         throw new NotImplementedException();
     }
 
-    public Task UpdateProductAsync(int id, ElectricProduct product, IFormFile? formFile)
+    public async Task<ResponseData<bool>> UpdateProductAsync(int id, ElectricProduct product)
     {
-        throw new NotImplementedException();
+        if (id < 0)
+        {
+            return ResponseData<bool>.Error("No such id");
+        }
+
+        //if ((product.Category.Name.IsNullOrEmpty() || product.Category.Name.IsNullOrEmpty()) && product.Category != null)
+        //{
+        //    var category = _context.Categories.FirstOrDefault(c => c.Id == product.Category.Id);
+        //    product.Category = category;
+        //}
+
+        if (product.ImagePath == null)
+        {
+            var item = _context.ElectricProducts.FirstOrDefault(p => p.Id == id);
+            product.ImagePath = item.ImagePath;
+        }
+
+        var existingProduct = await _context.ElectricProducts.FirstOrDefaultAsync(p => p.Id == product.Id);
+        if (existingProduct != null)
+        {
+            existingProduct.Name = product.Name;
+            existingProduct.Description = product.Description;
+            existingProduct.Price = product.Price;
+            existingProduct.ImagePath = product.ImagePath;
+            existingProduct.Category = await _context.Categories.FindAsync(product.Category.Id); // Обновите категорию по ID
+
+            await _context.SaveChangesAsync();
+        }
+
+
+        return ResponseData<bool>.Success(true);
     }
 }
