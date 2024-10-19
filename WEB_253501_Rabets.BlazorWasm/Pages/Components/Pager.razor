@@ -1,0 +1,46 @@
+﻿@inject IDataService DataService
+
+<nav aria-label="..." hidden="@((DataService.TotalPages <= 1) ? true : false)">
+    <ul class="pagination">
+        <li class="page-item @(DataService.CurrentPage == 1 ? "disabled" : "")">
+            <button class="page-link btn" aria-label="Previous" @onclick="@(() => SelectPage(DataService.CurrentPage - 1))">
+                <span aria-hidden="true">&laquo;</span>
+            </button>
+        </li>
+        @{
+            for (int i = 0; i < DataService.TotalPages; i++)
+            {
+                var pageNumber = i + 1;
+                <li class="page-item @(DataService.CurrentPage == i + 1 ? "active" : "")">
+                    <button class="page-link btn"
+                       @onclick="@(() => SelectPage(pageNumber))">
+                        @(i + 1)
+                    </button>
+                </li>
+            }
+        }
+        <li class="page-item @(DataService.CurrentPage == DataService.TotalPages ? "disabled" : "")">
+            <button class="page-link btn" aria-label="Next" @onclick="@(() => SelectPage(DataService.CurrentPage + 1))">
+                <span aria-hidden="true">&raquo;</span>
+            </button>
+        </li>
+    </ul>
+</nav>
+
+@code {
+    private async Task SelectPage(int pageNo)
+    {
+        DataService.CurrentPage = pageNo;
+        await DataService.GetProductListAsync();
+    }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataLoaded += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        DataService.DataLoaded -= StateHasChanged;
+    }
+}

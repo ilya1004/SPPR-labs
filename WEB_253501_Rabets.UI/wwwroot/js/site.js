@@ -1,4 +1,9 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+$(document).on('click', '.page-link', function (event) {
+    event.preventDefault();
 
-// Write your JavaScript code.
+    const url = $(this).attr('href');
+    console.log(url);
+    $('#product-list').load(url);
+});
+

@@ -1,12 +1,12 @@
 ﻿@{
     ViewBag.Title = "Products";
 }
-@model ProductListModel<ElectricProduct>
-
+@* @model ProductListModel<ElectricProduct> *@
 
 <h2>Каталог</h2>
+
 <div class="btn-group" style="margin: 0px 0px 10px 0px">
-    <ul class="nav ">
+    <ul class="nav">
         <li class="nav-item dropdown">
             <a class="btn btn-primary dropdown-toggle"
                data-bs-toggle="dropdown"
@@ -38,53 +38,5 @@
 </div>
 
 
-<div class="row" style="min-height: 550px">
-    @{
-        foreach (var item in Model.Items)
-        {
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <div style="display:flex; justify-content: center">
-                            <img src="@(item.ImagePath)" style="max-height: 230px; max-width: 350px" alt="No data" />
-                        </div>
-                        <h5 class="card-title">@(item.Name)</h5>
-                        <p class="card-text">@(item.Description)</p>
-                        <div style="display:flex; justify-content: center">
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-</div>
+<partial name="_ProductsListPartial" />
 
-@{
-    var currPage = Convert.ToInt32(Context.Request.Query["page"].FirstOrDefault());
-    var prevPage = currPage == 1 ? 1 : currPage - 1;
-    var nextPage = currPage == Convert.ToInt32(ViewData["totalPages"]) ? Convert.ToInt32(ViewData["totalPages"]) : currPage + 1;
-}
-
-<nav aria-label="...">
-    <ul class="pagination">
-        <li class="page-item @(currPage == 1 ? "disabled" : "")">
-            <a class="page-link" aria-label="Previous" asp-route-category="@(Context.Request.Query["category"])" asp-route-page="@(prevPage)">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-        @{
-            for (int i = 0; i < (int)ViewData["totalPages"]; i++)
-            {
-                <li class="page-item @(currPage == i + 1 ? "active" : "")">
-                    <a asp-route-category="@(Context.Request.Query["category"])" asp-route-page="@(i+1)" class="page-link">@(i + 1)</a>
-                </li>
-            }
-        }
-        <li class="page-item @(currPage == Convert.ToInt32(ViewData["totalPages"]) ? "disabled" : "")">
-            <a class="page-link" aria-label="Next" asp-route-category="@(Context.Request.Query["category"])" asp-route-page="@(nextPage)">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>

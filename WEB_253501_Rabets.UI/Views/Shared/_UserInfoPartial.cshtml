@@ -3,22 +3,22 @@
         .Claims
         .FirstOrDefault(c => c.Type.Equals("preferred_username", 
                         StringComparison.OrdinalIgnoreCase))?
-        .Value; 
+        .Value;
     var avatar = @User
         .Claims
         .FirstOrDefault(c => c.Type.Equals("avatar",
                         StringComparison.OrdinalIgnoreCase))?
         .Value;
-    // avatar = "Https:localhost:7002/Images/952b24ace8a734400639714c03c71700.png";
 }
 
 
 @if (User.Identity.IsAuthenticated) 
 {
-    @await Component.InvokeAsync("CartSummary")
-    <div class="dropdown ms-4 nav-color">
+    <div class="dropdown nav-color" style="margin-left: 70vh">
+        @await Component.InvokeAsync("CartSummary")
         <button class="btn btn-secondary dropdown-toggle"
-                type="button" id="dropdownMenuButton"
+                type="button" 
+                id="dropdownMenuButton"
                 data-bs-toggle="dropdown"
                 aria-expanded="false">
             @name
@@ -27,18 +27,18 @@
                  alt="User"
                  class="rounded nav-color" />
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="margin-left: 160px">
             <li>
                 <span class="dropdown-item-text">
                     <img src="@avatar"
                          alt="User"
-                         style="max-height: 150px; max-width: 150px; border-radius: 20px"/>
+                         style="max-height: 200px; max-width: 150px; border-radius: 20px"/>
                     @name
                 </span>
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-                <form asp-controller="Account" asp-action="Logout" id="logoutForm" class="form-inline">
+                <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm" class="form-inline">
                     <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
                 </form>
             </li>

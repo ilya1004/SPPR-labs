@@ -1,0 +1,62 @@
+﻿@inject IDataService DataService
+
+<div class="btn-group" style="margin: 0px 0px 10px 0px">
+    <ul class="nav">
+        <li class="nav-item dropdown">
+            <a class="btn btn-primary dropdown-toggle"
+               data-bs-toggle="dropdown"
+               role="button"
+               aria-expanded="false">
+                @if (DataService.SelectedCategory == null)
+                {
+                    <span>Все</span>
+                }
+                else
+                {
+                    <span>@DataService.SelectedCategory.Name</span>
+                }
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="dropdown-item btn"
+                       @onclick="@(() => SelectCategory(null))">
+                        Все
+                    </a>
+                </li>
+                @foreach (var item in DataService.Categories)
+                {
+                    <li>
+                        <a class="dropdown-item btn"
+                           @onclick="@(() => SelectCategory(item))">
+                            @item.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    </ul>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback ResetSelectedProduct { get; set; }
+
+    private async Task SelectCategory(Category? category)
+    {
+        DataService.CurrentPage = 1;
+        DataService.SelectedCategory = category;
+        await ResetSelectedProduct.InvokeAsync();
+        await DataService.GetProductListAsync();
+        // StateHasChanged();
+    }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataLoaded += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        DataService.DataLoaded -= StateHasChanged;
+    }
+}

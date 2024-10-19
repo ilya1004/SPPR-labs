@@ -10,12 +10,11 @@ public class ApiCategoryService : ICategoryService
 {
     private readonly HttpClient _httpClient;
     private readonly IConfiguration _configuration;
-    private readonly ILogger<ApiCategoryService> _logger;
     private readonly string _pageSize;
     private readonly JsonSerializerOptions _serializerOptions;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ITokenAccessor _tokenAccessor;
-    public ApiCategoryService(IConfiguration configuration, ILogger<ApiCategoryService> logger, IHttpClientFactory httpClientFactory, ITokenAccessor tokenAccessor)
+    public ApiCategoryService(IConfiguration configuration, IHttpClientFactory httpClientFactory, ITokenAccessor tokenAccessor)
     {
         _configuration = configuration;
         _pageSize = _configuration.GetSection("ItemsPerPage").Value!;
@@ -23,7 +22,6 @@ public class ApiCategoryService : ICategoryService
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-        _logger = logger;
         _httpClientFactory = httpClientFactory;
         _httpClient = _httpClientFactory.CreateClient("MyApiClient");
         _tokenAccessor = tokenAccessor;
@@ -46,11 +44,9 @@ public class ApiCategoryService : ICategoryService
             }
             catch (JsonException ex)
             {
-                _logger.LogError($"-----> Ошибка: {ex.Message}");
                 return ResponseData<List<Category>>.Error($"Ошибка: {ex.Message}");
             }
         }
-        _logger.LogError($"-----> Данные не получены от сервера. Error: {response.StatusCode.ToString()}");
         return ResponseData<List<Category>>.Error($"Данные не получены от сервера. Error: {response.StatusCode}");
     }
 }

@@ -1,8 +1,15 @@
-﻿@{
+﻿@inject Cart cart
 
+@{
+
+    decimal sum = cart.CartItems.Sum(i => i.Value.Product.Price * i.Value.Count);
+    int count = cart.CartItems.Sum(i => i.Value.Count);
 }
 
-<a asp-controller="Cart" asp-action="Index" class="navbar-text ms-auto">
-    <span>0 руб</span>
-    <i class="fa-solid fa-cart-shopping"></i>
-</a>
+<span style="display: inline-block; min-width: 160px;">
+    <a asp-controller="Cart" asp-action="Index" class="navbar-text ms-auto" style="margin: 0px 10px 0px 0px">
+        <span>@(sum) руб</span>
+        <span>(@(count))</span>
+        <i class="fa-solid fa-cart-shopping"></i>
+    </a>
+</span>

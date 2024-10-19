@@ -1,0 +1,54 @@
+﻿@implements IDisposable
+
+<table class="table" style="min-height: 250px; width: 50%">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in DataService.Products)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-info" @onclick="@(() => SelectProduct(item))">
+                            <span>Details</span>
+                            <span class="oi" data-glyph="magnifying-glass"></span>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    [Inject]
+    public IDataService DataService { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ProductSelected { get; set; }
+
+    private void SelectProduct(ElectricProduct product)
+    {
+        ProductSelected.InvokeAsync(product.Id);
+    }
+
+    protected override void OnInitialized()
+    {
+        DataService.DataLoaded += StateHasChanged;
+    }
+    public void Dispose()
+    {
+        DataService.DataLoaded -= StateHasChanged;
+    }
+}

@@ -1,0 +1,44 @@
+﻿@page "/products"
+@using Microsoft.AspNetCore.Authorization
+@using WEB_253501_Rabets.BlazorWasm.Pages.Components;
+@attribute [Authorize]
+
+<h3>Products</h3>
+<CategorySelector ResetSelectedProduct="ResetSelectedProduct" />
+<ProductsList ProductSelected="OnProductSelected" />
+<Pager />
+@if(SelectedProduct != null)
+{
+    <ProductDetails Product="SelectedProduct" />
+}
+
+
+@code {
+    [Inject]
+    public IDataService DataService { get; set; }
+
+    public ElectricProduct? SelectedProduct { get; set; } = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await DataService.GetCategoryListAsync();
+        await DataService.GetProductListAsync();
+    }
+
+    public void ResetSelectedProduct()
+    {
+        SelectedProduct = null;
+    }
+
+    public void OnProductSelected(int id)
+    {
+        if (SelectedProduct == null || id != SelectedProduct.Id)
+        {
+            SelectedProduct = DataService.Products.FirstOrDefault(p => p.Id == id);
+        }
+        else 
+        {
+            SelectedProduct = null;
+        }
+    }
+}

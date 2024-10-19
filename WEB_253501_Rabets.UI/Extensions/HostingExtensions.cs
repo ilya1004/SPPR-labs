@@ -1,9 +1,11 @@
-﻿using WEB_253501_Rabets.UI.Models;
+﻿using WEB_253501_Rabets.Domain.Models;
+using WEB_253501_Rabets.UI.Models;
 using WEB_253501_Rabets.UI.Services.ApiCategoryService;
 using WEB_253501_Rabets.UI.Services.ApiFileService;
 using WEB_253501_Rabets.UI.Services.ApiProductService;
 using WEB_253501_Rabets.UI.Services.Authentication;
 using WEB_253501_Rabets.UI.Services.Authorization;
+using WEB_253501_Rabets.UI.Sessions;
 
 namespace WEB_253501_Rabets.UI.Extensions;
 
@@ -21,5 +23,7 @@ public static class HostingExtensions
         builder.Services.AddScoped<IAuthService, KeycloakAuthService>();
 
         builder.Services.Configure<KeycloakData>(builder.Configuration.GetSection("Keycloak"));
+
+        builder.Services.AddScoped<Cart, SessionCart>();
     }
 }

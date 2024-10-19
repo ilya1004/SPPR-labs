@@ -1,0 +1,82 @@
+2024-10-15 00:58:40.406 +03:00 [ERR] 14.10.2024 21:58:40 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:58:40.408 +03:00 [ERR] 14.10.2024 21:58:40 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:58:59.474 +03:00 [ERR] 14.10.2024 21:58:59 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:58:59.478 +03:00 [ERR] 14.10.2024 21:58:59 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:47.018 +03:00 [ERR] 14.10.2024 21:59:47 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:47.020 +03:00 [ERR] 14.10.2024 21:59:47 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:49.673 +03:00 [ERR] 14.10.2024 21:59:49 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:49.676 +03:00 [ERR] 14.10.2024 21:59:49 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:50.926 +03:00 [ERR] 14.10.2024 21:59:50 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:50.946 +03:00 [ERR] 14.10.2024 21:59:50 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:51.834 +03:00 [ERR] 14.10.2024 21:59:51 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:51.836 +03:00 [ERR] 14.10.2024 21:59:51 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:53.223 +03:00 [ERR] 14.10.2024 21:59:53 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:53.225 +03:00 [ERR] 14.10.2024 21:59:53 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:53.888 +03:00 [ERR] 14.10.2024 21:59:53 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:53.890 +03:00 [ERR] 14.10.2024 21:59:53 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:55.607 +03:00 [ERR] 14.10.2024 21:59:55 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:55.610 +03:00 [ERR] 14.10.2024 21:59:55 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 00:59:56.535 +03:00 [WRN] Unable to configure Browser Link script injection on the response. 
+2024-10-15 00:59:56.841 +03:00 [WRN] Unable to configure Browser Link script injection on the response. 
+2024-10-15 00:59:57.102 +03:00 [WRN] Unable to configure Browser Link script injection on the response. 
+2024-10-15 00:59:59.120 +03:00 [ERR] 14.10.2024 21:59:59 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 00:59:59.122 +03:00 [ERR] 14.10.2024 21:59:59 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:00:06.909 +03:00 [ERR] 14.10.2024 22:00:06 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:00:06.912 +03:00 [ERR] 14.10.2024 22:00:06 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:00:10.034 +03:00 [ERR] 14.10.2024 22:00:10 ---> request /Account/AccessDenied returns 404
+2024-10-15 01:00:13.296 +03:00 [ERR] 14.10.2024 22:00:13 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:00:13.298 +03:00 [ERR] 14.10.2024 22:00:13 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:00:15.702 +03:00 [ERR] 14.10.2024 22:00:15 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:00:15.715 +03:00 [ERR] 14.10.2024 22:00:15 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:00:19.429 +03:00 [ERR] 14.10.2024 22:00:19 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:00:19.431 +03:00 [ERR] 14.10.2024 22:00:19 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:01:02.182 +03:00 [ERR] 14.10.2024 22:01:02 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:01:15.677 +03:00 [ERR] 14.10.2024 22:01:15 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:01:15.682 +03:00 [ERR] 14.10.2024 22:01:15 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:01:34.712 +03:00 [ERR] 14.10.2024 22:01:34 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:01:34.717 +03:00 [ERR] 14.10.2024 22:01:34 ---> request /WEB_253501_Rabets.UI.styles.css returns 404
+2024-10-15 01:02:03.080 +03:00 [ERR] 14.10.2024 22:02:03 ---> request /lib/font-awesome/css/%20all.min.css returns 404
+2024-10-15 01:02:40.456 +03:00 [ERR] 14.10.2024 22:02:40 ---> request /Product/qwe returns 404
+2024-10-15 01:02:44.723 +03:00 [ERR] 14.10.2024 22:02:44 ---> request /Account/AccessDenied returns 404
+2024-10-17 14:02:52.508 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+System.Net.Http.HttpRequestException: Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение. (localhost:7002)
+ ---> System.Net.Sockets.SocketException (10061): Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.DiagnosticsHandler.SendAsyncCore(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at Microsoft.Extensions.Http.Logging.LoggingScopeHttpMessageHandler.<SendCoreAsync>g__Core|5_0(HttpRequestMessage request, Boolean useAsync, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at WEB_253501_Rabets.UI.Services.ApiProductService.ApiProductService.GetProductListAsync(String categoryNormalizedName, Int32 pageNo) in C:\Users\user\source\repos\WEB_253501_Rabets\WEB_253501_Rabets.UI\Services\ApiProductService\ApiProductService.cs:line 44
+   at WEB_253501_Rabets.UI.Controllers.ProductController.Index(String category, Nullable`1 page) in C:\Users\user\source\repos\WEB_253501_Rabets\WEB_253501_Rabets.UI\Controllers\ProductController.cs:line 24
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeNextResourceFilter>g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at WEB_253501_Rabets.UI.Services.LoggingMiddleware.LoggingMiddleware.InvokeAsync(HttpContext context) in C:\Users\user\source\repos\WEB_253501_Rabets\WEB_253501_Rabets.UI\Services\LoggingMiddleware\LoggingMiddleware.cs:line 22
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-10-17 14:03:39.234 +03:00 [WRN] Unable to configure Browser Link script injection on the response. 
+2024-10-17 14:03:39.979 +03:00 [WRN] Unable to configure Browser Link script injection on the response. 

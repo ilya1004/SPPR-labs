@@ -1,0 +1,44 @@
+﻿@page "/counter/{number:int}"
+@using System.ComponentModel.DataAnnotations
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h3>Введите число</h3>
+
+<EditForm Model="this" OnValidSubmit="SetText">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputNumber @bind-Value="InputNumber" TValue="int?" />
+
+    <button type="submit" class="btn btn-primary">Установить текст</button>
+</EditForm>
+
+<h4>Вы ввели: @displayText</h4>
+
+<h4>Число в параметрах запроса: @number.ToString()</h4>
+
+@code {
+
+    [Parameter]
+    public int? number { get; set; }
+
+    // [Required(ErrorMessage = "Это поле обязательно для заполнения.")]
+    [Range(1, 10, ErrorMessage = "Число должно быть в диапазоне от {1} до {2}.")]
+    public int? InputNumber { get; set; }
+
+    // [Required(ErrorMessage = "Необходимо ввести возраст")]
+    // [Range(1, 110, ErrorMessage = "Возраст должен находиться в диапазоне от {1} до {2}")]
+    // public int? InputNumber { get; set; }
+
+    public string displayText = "";
+
+    public void SetText()
+    {
+        if (InputNumber.HasValue)
+        {
+            displayText = InputNumber.Value.ToString();
+        }
+    }
+}

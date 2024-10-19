@@ -1,0 +1,23 @@
+﻿@inject IDataService DataService
+
+<div style="display: inline-flex; padding: 10px; border: 1px solid black; border-radius: 10px; max-width: 80%">
+    <img src="@(Product.ImagePath)" style="max-height: 200px; max-width: 200px; margin: 0px 10px 0px 0px"/>
+    <div>
+        <p>
+            @(Product.Name)
+        </p>
+        <p>
+            @(Product.Description)
+        </p>
+        <p>
+            <strong>
+            @(Product.Price) руб
+            </strong>
+        </p>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ElectricProduct Product { get; set; }
+}

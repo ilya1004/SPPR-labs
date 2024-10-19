@@ -8,7 +8,7 @@ namespace WEB_253501_Rabets.API.Services.ElectricProductService;
 
 public class ProductService : IProductService
 {
-    private readonly int _maxPageSize = 20;
+    private readonly int _maxPageSize = 3;
     private readonly AppDbContext _context;
 
     public ProductService(AppDbContext context)

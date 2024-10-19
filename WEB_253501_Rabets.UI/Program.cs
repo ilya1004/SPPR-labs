@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Serilog;
+using Serilog.Events;
 using WEB_253501_Rabets.API.Data;
 using WEB_253501_Rabets.UI.Extensions;
 using WEB_253501_Rabets.UI.Models;
+using WEB_253501_Rabets.UI.Services.LoggingMiddleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,25 @@ builder.Services.AddHttpClient("MyApiClient", client =>
     client.BaseAddress = new Uri(uriData!.ApiUri);
 });
 
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+
+builder.Services.AddMvc();
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .WriteTo.File("Logs/log.txt", LogEventLevel.Warning)
+    .CreateLogger();
+
+//var options = new ConfigurationReaderOptions { SectionName = "Serilog" };
+//Log.Logger = new LoggerConfiguration()
+//    .ReadFrom.Configuration(builder.Configuration, options)
+//    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 builder.RegisterCustomService();
 
 var keycloakData = builder.Configuration.GetSection("Keycloak").Get<KeycloakData>();
@@ -44,13 +66,14 @@ builder.Services.AddAuthentication(options =>
         options.ClientSecret = keycloakData.ClientSecret;
         options.ResponseType = OpenIdConnectResponseType.Code;
         options.Scope.Add("openid");
-        //options.Scope.Add("avatar");
 
         options.SaveTokens = true;
         options.RequireHttpsMetadata = false;
 
         options.MetadataAddress = $"{keycloakData.Host}/realms/{keycloakData.Realm}/.well-known/openid-configuration";
     });
+
+builder.Services.AddAuthorizationBuilder().AddPolicy("admin", p => p.RequireRole("POWER-USER"));
 
 var app = builder.Build();
 
@@ -61,7 +84,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.MapRazorPages();
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -69,6 +92,10 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapRazorPages().RequireAuthorization("admin");
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "areas",

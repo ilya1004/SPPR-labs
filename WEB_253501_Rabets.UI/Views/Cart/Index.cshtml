@@ -1,5 +1,86 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Cart
+
+<h1>Корзина</h1>
+
+@if (Model.CartItems.Count == 0)
+{
+    <p>Ваша корзина пуста.</p>
 }
+else
+{
+    <table class="table-cart">
+        <thead>
+            <tr>
+                <th>
+                    №
+                </th>
+                <th>
+                    Photo
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th style="min-width: 100px">
+                    Price
+                </th>
+                <th>
+                    Count
+                </th>
+                <th style="min-width: 110px">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int index = 1;
+            }
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>
+                        <p style="text-align: center">@(index++)</p>
+                    </td>
+                    <td>
+                        <img style="max-height: 180px; max-width: 180px;" src="@(item.Value.Product.ImagePath)" />
+                    </td>
+                    <td>
+                        <span>
+                            @(item.Value.Product.Name)
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            @(item.Value.Product.Description)
+                        </span>
+                    </td>
+                    <td>
+                        <p>
+                            @(item.Value.Product.Price) руб
+                        </p>
+                    </td>
+                    <td>
+                        <p style="text-align: center; font-size: 20px">
+                            <b>
+                            @(item.Value.Count)
+                            </b>
+                        </p>
+                    </td>
+                    <td>
+                        <div>
+                            @* <form asp-action="RemoveFromCart" asp-route-productId="@item.Key" method="post">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form> *@
+                            <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@item.Key" asp-route-returnUrl="https://localhost:7001/Cart" class="btn btn-danger" style="margin: 20px 0px 0px 10px">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a asp-controller="Cart" asp-action="ClearCart" asp-route-returnUrl="https://localhost:7001/Cart" class="btn btn-danger" style="margin: 20px 0px 0px 10px">Clear cart</a>

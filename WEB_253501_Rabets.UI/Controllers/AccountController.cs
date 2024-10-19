@@ -11,14 +11,16 @@ public class AccountController : Controller
 {
     public async Task Login()
     {
-        await HttpContext.ChallengeAsync(OpenIdConnectDefaults.AuthenticationScheme, new AuthenticationProperties { RedirectUri = "https://localhost:7001" });
+        await HttpContext.ChallengeAsync(
+            OpenIdConnectDefaults.AuthenticationScheme, 
+            new AuthenticationProperties { RedirectUri = "https://localhost:7001" });
     }
 
     [HttpPost]
     public async Task Logout()
     {
-        await HttpContext.SignOutAsync(
-            CookieAuthenticationDefaults.AuthenticationScheme);
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
         await HttpContext.SignOutAsync(
             OpenIdConnectDefaults.AuthenticationScheme,
             new AuthenticationProperties { RedirectUri = Url.Action("Index", "Home") });
@@ -50,6 +52,7 @@ public class AccountController : Controller
                 return BadRequest(result.ErrorMessage);
             }
         }
+       
         return View(user);
     }
 }

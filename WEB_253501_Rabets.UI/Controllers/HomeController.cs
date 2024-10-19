@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Security.Claims;
 using WEB_253501_Rabets.UI.Models;
 
 namespace WEB_253501_Rabets.UI.Controllers;
@@ -16,8 +15,6 @@ public class HomeController : Controller
                                         new() { Id = 3, Name = "Item 3"} };
 
         var list = new SelectList(data, nameof(ListDemo.Id), nameof(ListDemo.Name));
-
-        
 
         return View(list);
     }

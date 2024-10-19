@@ -5,3 +5,29 @@ header, footer {
 .nav-color {
     color: rgba(255, 255, 255, 0.5)
 }
+
+
+
+table.table-cart {
+    border-collapse: collapse;
+    border: 1px solid #333;
+    padding: 8px;
+    caption-side: top;
+}
+
+
+table.table-cart th {
+    border: 1px solid #333;
+    padding: 8px 15px;
+    text-align: center;
+    vertical-align: baseline;
+    background-color: #f2f2f2;
+}
+
+table.table-cart td {
+    empty-cells: show;
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+}

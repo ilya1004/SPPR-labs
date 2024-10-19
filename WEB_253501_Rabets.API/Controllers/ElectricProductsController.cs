@@ -19,19 +19,21 @@ public class ElectricProductsController : ControllerBase
     }
 
     // GET: api/ElectricProducts/category
-    [HttpGet]
-    [Route("{category}")]
+    [HttpGet("{category}")]
+    [Authorize]
     public async Task<ActionResult<ResponseData<ProductListModel<ElectricProduct>>>> GetElectricProducts(string? category, [FromQuery] int pageNo = 1, [FromQuery] int pageSize = 3)
     {
+        Console.WriteLine(Request.Path);
         var serviceResponse = await _productService.GetProductListAsync(category, pageNo, pageSize);
         return new ActionResult<ResponseData<ProductListModel<ElectricProduct>>>(serviceResponse);
     }
 
     // GET: api/ElectricProducts/5
     [HttpGet("{id:int}")]
-    [Authorize("admin")]
+    //[Authorize(Policy = "admin")]
     public async Task<ActionResult<ResponseData<ElectricProduct>>> GetElectricProduct(int id)
     {
+
         var serviceResponse = await _productService.GetProductByIdAsync(id);
 
         if (!serviceResponse.Successfull)
@@ -44,7 +46,7 @@ public class ElectricProductsController : ControllerBase
 
     // PUT: api/ElectricProducts/5
     [HttpPut("{id:int}")]
-    [Authorize("admin")]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<ResponseData<bool>>> PutElectricProduct(int id, ElectricProduct electricProduct)
     {
         var serviceResponse = await _productService.UpdateProductAsync(id, electricProduct);
@@ -60,7 +62,7 @@ public class ElectricProductsController : ControllerBase
     // POST: api/ElectricProducts
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    [Authorize("admin")]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<ResponseData<int>>> PostElectricProduct(ElectricProduct electricProduct)
     {
         var serviceResponse = await _productService.CreateProductAsync(electricProduct);
@@ -75,7 +77,7 @@ public class ElectricProductsController : ControllerBase
 
     // DELETE: api/ElectricProducts/5
     [HttpDelete("{id}")]
-    [Authorize("admin")]
+    [Authorize(Policy = "admin")]
     public async Task<ActionResult<bool>> DeleteElectricProduct(int id)
     {
         var serviceResponse = await _productService.DeleteProductAsync(id);
